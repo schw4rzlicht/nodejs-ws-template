@@ -5,9 +5,14 @@ import MessageHandler from './MessageHandler.js';
 
 const services = {};
 
-{%- for channelName, channel in asyncapi.channels() %}
+{%- for channelName, channel in asyncapi.channels() -%}
+{%- set path = channelName -%}
+{%- if channelName === '/' -%}
+{%- set channelName = 'root' -%}
+{%- set path = '' -%}
+{%- endif %}
 services.{{ channelName | camelCase }} = {
-  path: '{{ channelName | camelCase }}',
+  path: '{{ path | camelCase }}',
   handlers: []
 };
 
