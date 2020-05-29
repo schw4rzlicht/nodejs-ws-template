@@ -6,7 +6,9 @@
   </head>
 
   <body>
+    {% if params.bundleDependencies -%}
     Open your browser console to see the logs.
+    <script src="lib/ajv/dist/ajv.min.js"></script>
     <script type="module">
       import Client from './lib/client.js';
       import services from './lib/services.js';
@@ -40,5 +42,8 @@
       console.log('  Usage: send(message)');
       console.log('  Example: send(\'Hello server\')');
     </script>
+    {%- else -%}
+    You need to run the generator with <samp>bundleDependencies = true</samp> to have browser support!
+    {%- endif %}
   </body>
 </html>
