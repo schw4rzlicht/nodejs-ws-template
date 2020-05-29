@@ -3,7 +3,7 @@ import MessageHandler from './MessageHandler.js';
 const services = {};
 
 {%- for channelName, channel in asyncapi.channels() %}
-services.{{ channelName | camelCase }}: {
+services.{{ channelName | camelCase }} = {
   path: '{{ channelName | camelCase }}',
   handlers: []
 };
@@ -11,10 +11,14 @@ services.{{ channelName | camelCase }}: {
 {%- if channel.hasSubscribe() %}
 {%- for message in channel.subscribe().messages() %}
 
-// FIXME message.name() and message._json.x-parser-message-name fail
+{%- if message.name() === undefined -%}
+{{ 'This template requires name to be set in every message.' | logError }}
+{%- endif -%}
+
 services.{{ channelName | camelCase }}.handlers.push(new MessageHandler('{{ message.name() | camelCase }}', event => {
   return typeof event.data === '{{ message.payload().type() }}'; // TODO
 }));
+
 {% endfor %}
 {%- endif %}
 {% endfor %}
