@@ -24,12 +24,19 @@ services.{{ channelName | camelCase }} = {
 {%- endif -%}
 
 services.{{ channelName | camelCase }}.handlers.push(new MessageHandler('{{ message.name() | camelCase }}', event => {
-  let ajv = new Ajv();
-  return ajv.validate({{ message.payload()._json | dump | safe }}, event.data);
+  return new Ajv().validate({{ message.payload()._json | dump | safe }}, parseData(event.data));
 }));
 
-{%- endfor -%}
+{% endfor -%}
 {%- endif -%}
-{%- endfor %}
+{%- endfor -%}
+
+function parseData(data) {
+  try {
+    return JSON.parse(data);
+  } catch(ignored) {
+    return data;
+  }
+}
 
 export default services;
