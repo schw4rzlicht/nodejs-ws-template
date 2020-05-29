@@ -1,6 +1,3 @@
-{%- if not params.bundleDependencies -%}
-import Ajv from 'ajv';
-{%- endif -%}
 import MessageHandler from './MessageHandler.js';
 
 const services = {};
@@ -23,20 +20,11 @@ services.{{ channelName | camelCase }} = {
 {{ 'This template requires name to be set in every message.' | logError }}
 {%- endif -%}
 
-services.{{ channelName | camelCase }}.handlers.push(new MessageHandler('{{ message.name() | camelCase }}', event => {
-  return new Ajv().validate({{ message.payload()._json | dump | safe }}, parseData(event.data));
-}));
+services.{{ channelName | camelCase }}.handlers.push(new MessageHandler('{{ message.name() | camelCase }}',
+  {{ message.payload()._json | dump | safe }}));
 
 {% endfor -%}
 {%- endif -%}
 {%- endfor -%}
-
-function parseData(data) {
-  try {
-    return JSON.parse(data);
-  } catch(ignored) {
-    return data;
-  }
-}
 
 export default services;

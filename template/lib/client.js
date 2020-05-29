@@ -27,8 +27,20 @@ export default class Client extends EventTarget {
     }
   }
 
+  dispatchMessageEvent(type, data) {
+    this.dispatchEvent(new MessageEvent(type, {data: data}));
+  }
+
+  parseData(data) {
+    try {
+      return JSON.parse(data);
+    } catch(ignored) {
+      return data;
+    }
+  }
+
   handleMessage(event) {
-    this.dispatchEvent(new MessageEvent('message', event));
+    this.dispatchMessageEvent('message', this.parseData(event.data));
     for (const messageHandler of this.messageHandlers) {
       messageHandler.handle(this, event);
     }
