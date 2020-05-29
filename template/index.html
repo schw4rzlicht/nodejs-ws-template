@@ -19,12 +19,17 @@
       client.addEventListener('open', () => console.log('Connection opened.'));
       client.addEventListener('close', () => console.log('Connection closed.'));
 
-      client.addEventListener('message', event => {
-        console.log(event.data);
-      });
+      client.addEventListener('message', logEvent);
 
       window.services = services;
-      window.connect = service => client.connect('{{ asyncapi.server(params.server).url() }}', service);
+      window.connect = service => {
+
+        for (const messageHandler of service.handlers) {
+          client.addEventListener(`message.${messageHandler.messageName}`, logEvent);
+        }
+
+        client.connect('{{ asyncapi.server(params.server).url() }}', service);
+      };
       window.send = message => client.send(message);
 
       // Display help
@@ -41,6 +46,11 @@
       console.log('- send: Send a message to the server at a currently connected service.')
       console.log('  Usage: send(message)');
       console.log('  Example: send(\'Hello server\')');
+
+      function logEvent(event) {
+        console.log(`Received event: ${event.type}`);
+        console.log(event.data);
+      }
     </script>
     {%- else -%}
     You need to run the generator with <samp>bundleDependencies = true</samp> to have browser support!
