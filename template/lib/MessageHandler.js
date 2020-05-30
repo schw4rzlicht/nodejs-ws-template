@@ -1,10 +1,8 @@
-{%- if not params.bundleDependencies -%}
-import Ajv from 'ajv';
+const Ajv = require('ajv');
 
-{% endif -%}
-export default class MessageHandler {
+module.exports = class MessageHandler {
 
-  constructor(messageName, schema, responsible) {
+  constructor(messageName, schema) {
     this.validate = new Ajv().compile(schema);
     this.messageName = messageName;
   }

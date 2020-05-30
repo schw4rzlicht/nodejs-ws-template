@@ -1,4 +1,4 @@
-import MessageHandler from './MessageHandler.js';
+const MessageHandler = require('./MessageHandler.js');
 
 const services = {};
 
@@ -27,4 +27,4 @@ services.{{ channelName | camelCase }}.handlers.push(new MessageHandler('{{ mess
 {%- endif -%}
 {%- endfor -%}
 
-export default services;
+module.exports = services;

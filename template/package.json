@@ -1,11 +1,8 @@
 {
   "name": "{{ asyncapi.info().title() | kebabCase }}",
   "description": "{{ asyncapi.info().description() | oneLine }}",
-  "version": "{{ asyncapi.info().version() }}"
-
-{%- if not params.bundleDependencies -%},
+  "version": "{{ asyncapi.info().version() }}",
   "dependencies": {
     "ajv": "^6.12.2"
   }
-{% endif -%}
 }

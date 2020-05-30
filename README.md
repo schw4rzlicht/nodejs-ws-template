@@ -17,7 +17,6 @@ npm install -g @asyncapi/generator
 |Name|Description|Required|Example|
 |---|---|---|---|
 |server|The server you want to use in the code.|Yes|`production`|
-|bundleDependencies|Wether generated code should include dependencies (needed for browser compatibility).|No| `true`
 
 ## Supported protocols
 

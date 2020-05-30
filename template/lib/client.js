@@ -1,4 +1,4 @@
-export default class Client extends EventTarget {
+module.exports = class Client extends EventTarget {
 
   connect(server, service, queryString = '') {
 

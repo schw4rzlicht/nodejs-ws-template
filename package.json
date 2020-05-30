@@ -32,7 +32,7 @@
     "@asyncapi/generator-filters": "^1.0.0",
     "@asyncapi/generator-hooks": "^0.1.0",
     "ajv": "^6.12.2",
-    "ncp": "^2.0.0"
+    "browserify": "^16.5.1"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -71,11 +71,6 @@
       "server": {
         "description": "The server you want to use in the code.",
         "required": true
-      },
-      "bundleDependencies": {
-        "description": "Whether to bundle dependencies. Needed for browser compatibility.",
-        "required": false,
-        "default": false
       },
       "asyncapiFileDir": {
         "description": "Custom location of the AsyncAPI file that you provided as an input in generation. By default it is located in the root of the output directory"
