@@ -10,7 +10,7 @@ module.exports = class MessageHandler {
   handle(client, event) {
     let data = client.parseData(event.data);
     if(this.validate(data)) {
-      client.dispatchMessageEvent(`message.${this.messageName}`, data);
+      client.emit(`message.${this.messageName}`, data);
     }
   }
 }

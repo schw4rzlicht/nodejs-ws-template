@@ -1,6 +1,7 @@
+const Events = require('events');
 const WebSocket = require('isomorphic-ws');
 
-module.exports = class Client extends EventTarget {
+module.exports = class Client extends Events.EventEmitter {
 
   connect(server, service, queryString = '') {
 
@@ -9,16 +10,16 @@ module.exports = class Client extends EventTarget {
     const url = new URL(service.path + queryString, `ws://${server}`).toString();
     this.websocket = new WebSocket(url);
 
-    this.websocket.onerror = error => this.dispatchEvent(new ErrorEvent('error', {error: error}));
-    this.websocket.onopen = () => this.dispatchEvent(new Event('open'));
-    this.websocket.onclose = () => this.dispatchEvent(new Event('close'));
+    this.websocket.onerror = error => this.emit('error', error);
+    this.websocket.onopen = () => this.emit('open');
+    this.websocket.onclose = () => this.emit('close');
     this.websocket.onmessage = event => this.handleMessage(event);
   }
 
   send(message) {
 
     if(!this.websocket) {
-      this.dispatchEvent(new ErrorEvent('error', {error: new Error('WS client not connected!')}));
+      this.emit('error', new Error('WS client not connected!'));
       return;
     }
 
@@ -27,10 +28,6 @@ module.exports = class Client extends EventTarget {
     } else {
       this.websocket.send(message);
     }
-  }
-
-  dispatchMessageEvent(type, data) {
-    this.dispatchEvent(new MessageEvent(type, {data: data}));
   }
 
   parseData(data) {
@@ -42,7 +39,7 @@ module.exports = class Client extends EventTarget {
   }
 
   handleMessage(event) {
-    this.dispatchMessageEvent('message', this.parseData(event.data));
+    this.emit('message', this.parseData(event.data));
     for (const messageHandler of this.messageHandlers) {
       messageHandler.handle(this, event);
     }
