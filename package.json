@@ -31,7 +31,9 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^1.0.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "browserify": "^16.5.1"
+    "browserify": "^16.5.1",
+    "ws": "^7.3.0",
+    "isomorphic-ws": "^4.0.1"
   },
   "devDependencies": {
     "@semantic-release/commit-analyzer": "^8.0.1",
