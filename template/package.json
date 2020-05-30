@@ -3,6 +3,8 @@
   "description": "{{ asyncapi.info().description() | oneLine }}",
   "version": "{{ asyncapi.info().version() }}",
   "dependencies": {
-    "ajv": "^6.12.2"
+    "ajv": "^6.12.2",
+    "ws": "^7.3.0",
+    "isomorphic-ws": "^4.0.1"
   }
 }

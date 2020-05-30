@@ -31,7 +31,6 @@
   "dependencies": {
     "@asyncapi/generator-filters": "^1.0.0",
     "@asyncapi/generator-hooks": "^0.1.0",
-    "ajv": "^6.12.2",
     "browserify": "^16.5.1"
   },
   "devDependencies": {

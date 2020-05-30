@@ -1,3 +1,5 @@
+const WebSocket = require('isomorphic-ws');
+
 module.exports = class Client extends EventTarget {
 
   connect(server, service, queryString = '') {
